@@ -1,0 +1,7 @@
+.env
+.python-version
+app/config.py
+app/database.py
+venv/
+*/__pycache__/
+start.sh
