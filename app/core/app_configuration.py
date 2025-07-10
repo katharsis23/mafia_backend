@@ -5,6 +5,9 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from ..database import ENGINE
 from sqlalchemy.orm import declarative_base
+from ..config import settings
+
+
 Base_decl=declarative_base()
 
 ORIGINS=["http://localhost:3000"] 
@@ -34,6 +37,7 @@ class App_Configuration:
         async def startup():
             try:
                 async with ENGINE.begin() as connection:
+                   # await connection.execute(f"SET TIME ZONE '{settings.time_zone}'")
                     await connection.run_sync(Base_decl.metadata.create_all)
             except SQLAlchemyError as database_error:
                 print(f"Failed to create tables: {database_error}")
